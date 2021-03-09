@@ -1,25 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
-
-<!--    <ImageButton-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/task_delete_old"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:onClick="changeStatusTaskOld"-->
-<!--        android:src="@android:drawable/checkbox_off_background"-->
-<!--        android:background="#00000000"-->
-<!--        android:scaleType="fitCenter"/>-->
 
     <CheckBox
         android:id="@+id/task_delete"
@@ -31,12 +14,8 @@
         android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:textColor="@color/black"
-        android:text="{text_name}"
         android:textSize="20sp"
         android:layout_gravity="start|center_vertical"/>
 
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
