@@ -6,7 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,14 +20,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lunarekatze.hippotodo.db.TaskHelper;
+import com.lunarekatze.hippotodo.db.TaskHelper;         // подключаем
 
 import java.util.ArrayList;
 
 // ОСНОВНОЙ КЛАСС
 
-public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener{
-
+public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener
+{
     MyAdapter adapter;
     private TaskHelper mHelper;
 
@@ -130,6 +134,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     public void changeStatusTask(View view){
         View parent = (View) view.getParent();
         TextView taskTextView = parent.findViewById(R.id.task_title);
+        CheckBox checkBox = parent.findViewById(R.id.task_delete);
+        checkBox.setChecked(false);
+        String task = String.valueOf(taskTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        //int intStatus = TaskHelper
+        db.delete(TaskHelper.DATABASE_TABLE, TaskHelper.COLUMN_NAME + " =?", new String[] {task});
+        db.close();
+        updateUI();
+    }
+
+    public void changeStatusTaskOld(View view){
+        View parent = (View) view.getParent();
+        TextView taskTextView = parent.findViewById(R.id.task_title);
         String task = String.valueOf(taskTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
         //int intStatus = TaskHelper
@@ -140,25 +157,62 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void addTask(View view) {
         final EditText task_text = new EditText (this);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        task_text.setSingleLine();
+
+        FrameLayout container = new FrameLayout(this);
+        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        task_text.setLayoutParams(params);
+        container.addView(task_text);
+
+        //AlertDialog alertDialog = new AlertDialog(this, R.style.Theme_MaterialComponents_Dialog_Alert);
+
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("New Task")
                 .setMessage("Add a new task")
-                .setView (task_text)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String task = String.valueOf(task_text.getText());
-                        SQLiteDatabase database = mHelper.getWritableDatabase();
-                        ContentValues values = new ContentValues();
+                //.setView (task_text)
+                .setView(container)
+                .setPositiveButton("Add", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        final AlertDialog alertDialog = dialog.show();
+
+        Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String task = String.valueOf(task_text.getText());
+
+                SQLiteDatabase database = mHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();         // Класс исп-ся для добавления новых строк в таблицу
+
+                /*Cursor cursor = database.query(TaskHelper.DATABASE_TABLE,null, TaskHelper.COLUMN_NAME,
+                        null, null, null, null, null);*/
+
+                Cursor cursor2 = database.rawQuery("SELECT * FROM " + TaskHelper.DATABASE_TABLE + " WHERE " + TaskHelper.COLUMN_NAME + " = '" + task + "'", null);
+                int count = cursor2.getCount();
+                cursor2.close();
+                if (task.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Field is empty", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if (count > 0) {
+                        Toast.makeText(getApplicationContext(), "string found!!! =)", Toast.LENGTH_LONG).show();
+                    }
+                    else {
                         values.put(TaskHelper.COLUMN_NAME, task);
                         values.put(TaskHelper.COLUMN_STATUS, "current");
                         database.insertWithOnConflict(TaskHelper.DATABASE_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                         database.close();
+                        alertDialog.dismiss();
                         updateUI();
                     }
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
-        dialog.show();
+                }
+            }
+        });
     }
+
+    //public String checkTask ()
 }

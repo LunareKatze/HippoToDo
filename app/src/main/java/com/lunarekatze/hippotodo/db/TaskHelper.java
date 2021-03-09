@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 // КЛАСС БАЗЫ ДАННЫХ
 
-public class TaskHelper extends SQLiteOpenHelper {      // Класс расширяется от класса SQLiteOpenHelper (ибо нужен SQLite)
+public class TaskHelper extends SQLiteOpenHelper {      // Класс наследуется от класса SQLiteOpenHelper (ибо нужен SQLite)
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "todo.db";
     public static final String DATABASE_TABLE = "tasks";
     public static final String COLUMN_ID = "id";
