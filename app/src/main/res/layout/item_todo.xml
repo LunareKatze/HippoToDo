@@ -5,17 +5,29 @@
     android:layout_height="wrap_content">
 
     <CheckBox
-        android:id="@+id/task_delete"
+        android:id="@+id/change_status"
         android:onClick="changeStatusTask"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/task_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:layout_gravity="start|center_vertical"/>
+        android:layout_gravity="start|center_vertical"
+        android:layout_weight="8"/>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="x"
+        android:id="@+id/delete_task"
+        android:onClick="deleteTask"
+        android:layout_weight="1"
+        android:background="#ffffff"/>
+
 
 </LinearLayout>
