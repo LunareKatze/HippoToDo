@@ -20,14 +20,14 @@
         android:layout_gravity="start|center_vertical"
         android:layout_weight="8"/>
 
-    <Button
+    <ImageButton
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:text="x"
         android:id="@+id/delete_task"
         android:onClick="deleteTask"
         android:layout_weight="1"
-        android:background="#ffffff"/>
+        android:background="@drawable/shape_button"
+        android:src="@drawable/baseline_clear_black_24dp"/>
 
 
 </LinearLayout>
