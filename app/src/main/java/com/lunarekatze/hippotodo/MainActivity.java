@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
 
         db.close();*/
+        //changeStatusTask(view);
     }
 
     private void updateUI() {
@@ -133,11 +134,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         container.addView(task_text);
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("New Task")
-                .setMessage("Add a new task")
+        dialog.setTitle(R.string.dialog_title)
+                .setMessage(R.string.dialog_message)
                 .setView(container)
-                .setPositiveButton("Add", null)
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton(R.string.dialog_positive, null)
+                .setNegativeButton(R.string.dialog_negative, null)
                 .create();
 
         final AlertDialog alertDialog = dialog.show();
@@ -153,11 +154,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 int count = cursor.getCount();      //пишем в int номер строки задачи
                 cursor.close();
                 if (task.equals("")) {              // если user не ввел название задачи, то
-                    Toast.makeText(getApplicationContext(), "Field is empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_field_empty, Toast.LENGTH_LONG).show();
                 }
                 else {
                     if (count > 0) {                // если номер строки есть, то такая задача уже есть
-                        Toast.makeText(getApplicationContext(), "string found!!! =)", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.toast_same_task, Toast.LENGTH_LONG).show();
                     }
                     else {                      // иначе это новая задача
                         values.put(TaskHelper.COLUMN_NAME, task);

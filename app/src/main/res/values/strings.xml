@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HippoToDo</string>
+    <string name="dialog_title">Новая задача</string>
+    <string name="dialog_message">Введите текст задачи</string>
+    <string name="dialog_positive">Добавить</string>
+    <string name="dialog_negative">Отменить</string>
+    <string name="toast_field_empty">Вы не ввели задачу!</string>
+    <string name="toast_same_task">У Вас уже есть такая задача!</string>
 </resources>
