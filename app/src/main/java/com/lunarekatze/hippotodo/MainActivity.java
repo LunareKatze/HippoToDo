@@ -39,27 +39,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     @Override
     public void onItemClick(View view, int position) {
-        //Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-        //TextView testText = findViewById(R.id.test_text);
-        //TextView taskTextView = view.findViewById(R.id.task_title);       //пишем в переменную текст задачи
-        //SQLiteDatabase db = mHelper.getReadableDatabase();  // Создаём и/или открываем базу на чтение
-        //Cursor cursor = db.query(TaskHelper.DATABASE_TABLE,
-/*                new String[] {TaskHelper.COLUMN_ID, TaskHelper.COLUMN_NAME, TaskHelper.COLUMN_STATUS}, TaskHelper.COLUMN_NAME + " = ?", new String[] { taskTextView.getText().toString() }, null, null, null);
 
-        if (cursor != null) {
-            cursor.moveToFirst();
-
-            //while (cursor.moveToNext()) {    // Пока у курсора есть следующий элемент...
-            //int index = cursor.getColumnIndex(TaskHelper.COLUMN_STATUS);  // Получаем индекс для каждого элемента в базе в столбце COLUMN_NAME
-            //taskList.add(cursor.getString(index));  // Получаем строку по индексу и пишем её в ArrayList
-            //testText.setText(cursor.getString(1) + " / " + cursor.getString(index));
-            //}
-
-            cursor.close();
-        }
-
-        db.close();*/
-        //changeStatusTask(view);
     }
 
     private void updateUI() {
@@ -100,11 +80,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         CheckBox checkBox = parent.findViewById(R.id.change_status);
         ContentValues values = new ContentValues();         // Класс исп-ся для добавления новых строк в таблицу
         if (checkBox.isChecked()){
-            //Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_LONG).show();
             values.put("status", "done");
         }
         else {
-            //Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_LONG).show();
             values.put("status", "current");
         }
         SQLiteDatabase db = mHelper.getWritableDatabase();
